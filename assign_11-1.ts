@@ -1,14 +1,22 @@
 export{};
+// abstract class TravelPackage {
+//     constructor(private packageId: string,private packageName: string,protected basePrice: number) {}
+//     abstract calPrice(people: number): number;
+// }
+
 abstract class TravelPackage {
+    constructor(private packageId: string, private packageName: string, protected basePrice: number) {}
 
+    public getPackageName(): string {
+        return this.packageName;
+    }
 
-    constructor(public packageId: string,public packageName: string,public basePrice: number) {
-    
+    public getBasePrice(): number {
+        return this.basePrice;
     }
 
     abstract calPrice(people: number): number;
 }
-
 
 class OneDayTrip extends TravelPackage {
     constructor(packageId: string, packageName: string, basePrice: number) {
@@ -61,17 +69,20 @@ class TravelAgency {
     }
 
     displayPackages(): void {
-        console.log("===== Travel Packages =====");
-        this._packages.forEach((pkg, index) => {
-            if (pkg instanceof OvernightTrip) {
-                console.log(`${index + 1}. ${pkg.packageName} (Overnight - ${pkg._numberOfNights} Nights)`);
-            } else {
-                console.log(`${index + 1}. ${pkg.packageName} (One-Day)`);
-            }
-            console.log(`Price: ${pkg.basePrice.toLocaleString('en-US', { minimumFractionDigits: 2 })} Baht`);
-        });
-        console.log("");
-    }
+      console.log("===== Travel Packages =====");
+      this._packages.forEach((pkg, index) => {
+          if (pkg instanceof OvernightTrip) {
+        
+              console.log(`${index + 1}. ${pkg.getPackageName()} (Overnight - ${pkg._numberOfNights} Nights)`);
+          } else {
+    
+              console.log(`${index + 1}. ${pkg.getPackageName()} (One-Day)`);
+          }
+        
+          console.log(`Price: ${pkg.getBasePrice().toLocaleString('en-US', { minimumFractionDigits: 2 })} Baht`);
+      });
+      console.log("");
+  }
 }
 
 class Booking {
@@ -101,7 +112,7 @@ class Booking {
         console.log("===== Booking Detail =====");
         console.log(`Booking ID: ${this._bookingId}`);
         console.log(`Customer: ${this._customer._name}`);
-        console.log(`Package: ${this._travelPackage.packageName}`);
+        console.log(`Package: ${this._travelPackage.getPackageName()}`);
         console.log(`Travelers: ${count} (${this._travelers.join(", ")})\n`);
         console.log(`Total Price${discText}: ${total.toLocaleString('en-US', { minimumFractionDigits: 2 })} Baht`);
   
